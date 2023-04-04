@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Search {{query}}{% endblock title%}
+
+{% block content %}
+    <h2 class="mb-8 text-2xl text-center mt-10">Search Results</h2>
+    {% if items|length == 0 and projects|length == 0 %}
+    <h2 class="mb-8 text-2xl ml-20">No results</h2>
+    {% endif %}
+
+    {% if items|length > 0 %}
+        <div class="2xl:mx-96 sm:mx-0 md:mx-20 border-t-2 border-gray-100">
+            <div class="px-6 py-12 rounded-xl">
+                <h2 class="mb-8 text-2xl ml-20">Products</h2>
+                <div class="grid grid-cols-4 gap-3">
+                    {% for item in items %}
+                        <div class="relative shadow-lg bg-gray-100 m-2 hover:scale-90">
+                            <a href="{% url 'item:detail' item.id %}">
+                                <div>
+                                    <img class="" src="{{ item.image.url }}">
+                                </div>
+                                <div class="p-2 bg-gray-100">
+                                    <h2 class="xl:text-xl lg:text-lg md:text-md sm:text-sm font-semibold">{{ item.name }}</h2>
+                                    <p class="text-gray-500 text-sm py-2">Created on {{ item.created_at }}</p>
+                                </div>
+                            </a>
+                            <a href="{% url 'item:items' %}?query={{ query }}&category={{ item.category.id }}">
+                                <div class="absolute top-0 right-0 p-2 bg-orange-800 text-white m-1 rounded-full text-xs bg-opacity-70 hover:bg-opacity-100">{{ item.category }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="flex justify-center">
+                    <a href="{% url 'item:items' %}" class="bg-orange-900 p-2 rounded-xl text-white hover:bg-orange-800 mt-5 px-5 bg-opacity-90">View More Products</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if projects|length > 0 %}
+        <div class="2xl:mx-96 sm:mx-0 md:mx-20 border-t-2 border-b-2 border-gray-100">
+            <div class="px-6 py-12">
+                <h2 class="mb-12 text-2xl ml-20">Projects</h2>
+                <div class="grid grid-cols-4 gap-3">
+                    {% for project in projects %}
+                        <div class="relative shadow-lg bg-gray-100 m-2 hover:scale-90">
+                            <a href="{% url 'project:detail' project.id %}">
+                                <div>
+                                    <img class="" src="{{ project.image.url }}">
+                                </div>
+                                <div class="p-2">
+                                    <h2 class="xl:text-xl lg:text-lg md:text-md sm:text-sm font-semibold">{{ project.name }}</h2>
+                                    {% if project.collab %}
+                                        <h3 class="text-gray-500 text-sm py-2">In collaboration with <strong>{{ project.collab }}</strong></h3>
+                                    {% endif %}
+                                    {% if project.location %}
+                                    <h3 class="text-gray-500 text-sm">Located in <strong>{{ project.location }}</strong> </h3>
+                                    {% endif %}
+                                </div>
+                            </a>
+                            <a href="{% url 'project:projects' %}?query={{ query }}&category={{ project.category.id }}">
+                                <div class="absolute top-0 right-0 p-2 bg-orange-800 text-white m-1 rounded-full text-xs bg-opacity-80 hover:bg-opacity-100">{{ project.category }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="flex justify-center">
+                    <a href="{% url 'project:projects' %}" class="bg-orange-900 p-2 rounded-xl text-white hover:bg-orange-800 mt-5 px-5 bg-opacity-90">View More Projects</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}

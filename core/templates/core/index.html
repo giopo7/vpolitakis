@@ -1,0 +1,158 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <div class="flex justify-center font-serif text-xl text-bold aspect-w-1" >
+        <!-- header -->
+        <header class="relative">
+            <img src="/media/banner2-small.jpg" alt="banner">
+                    <!-- <video class="object-cover h-52 w-full" autoplay muted loop>
+                        <source src="/media/dad_wheel.mp4" type="video/mp4"> 
+                    </video> -->
+            <!-- heading text -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
+                <h3 class="p-1">Let <em>minoan pottery</em> </h3>
+                <h3 class="ml-5 p-1">speak to your heart</h3>
+            </div>
+        </header>
+    </div>
+
+    <div class="2xl:mx-40 lg:mx-30 md:mx-10 sm:mx-0">
+        <div class="ml-10 mr-10 ">
+            <!-- short bio -->
+            <div class="px-6 pt-8 font-serif ">
+                <div class="w-full flex justify-center">
+                    <div class="flex items-center relative mx-20 ">
+                        <img class="h-72 rounded-full shadow-xl" src="/media/vassilis.jpg" alt="vassilis politakis wheel">
+                        <p class="ml-8 leading-normal text-gray-900 text-3xl">Since 1990, <strong>Vassilis Politakis</strong><br>has worked to understand and recreate<br>the <strong>pottery of the Aegean and Cypriot bronze age.</strong><br><br>His expertise is supported by collaborations with:</p>
+                    </div>                    
+                </div>
+                <div class="bg-gray-200 rounded-xl p-5 mt-5 mb-5 ">
+                    <p class="whitespace-pre-wrap leading-10 text-center italic">The British&nbsp;School&nbsp;at&nbsp;Athens (BSA)            The&nbsp;Italian&nbsp;arch.&nbsp;school            The&nbsp;American&nbsp;Study&nbsp;Center&nbsp;of&nbsp;Aegean&nbsp;Prehistory&nbsp;(INSTAP-EC)          The&nbsp;Heraklion&nbsp;Archaeological&nbsp;Museum            The&nbsp;Official&nbsp;Hellenic&nbsp;Institute&nbsp;of&nbsp;Material&nbsp;Science&nbsp;(Demokritos)            The&nbsp;University&nbsp;of&nbsp;Crete         The&nbsp;Greek&nbsp;Ministry&nbsp;of&nbsp;Culture           And&nbsp;several&nbsp;individual&nbsp;academic&nbsp;archaeologists</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!-- latest pieces -->
+        <div class="2xl:mx-96 sm:mx-0 md:mx-20 border-t-2 border-gray-100">
+            <div class="px-6 py-12 rounded-xl">
+                <h2 class="mb-8 leading-normal text-gray-900 text-3xl font-serif text-center">Latest Pieces</h2>
+                <div class="mb-8">
+                    <h2 class="italic font-serif font-light text-xl text-center text-orange-800 p-2">100% <em>hand-made</em> & <em>hand-painted</em></h2>
+                </div>
+                <div class="grid grid-cols-4 gap-3">
+                    {% for item in items %}
+                        <div class="relative shadow-lg bg-gray-100 m-2 hover:scale-90">
+                            <a href="{% url 'item:detail' item.id %}">
+                                <div>
+                                    <img class="" src="{{ item.image.url }}">
+                                </div>
+                                <div class="p-2 bg-gray-100">
+                                    <h2 class="xl:text-xl lg:text-lg md:text-md sm:text-sm font-semibold">{{ item.name }}</h2>
+                                    <p class="text-gray-500 text-sm py-2">Created on {{ item.created_at }}</p>
+                                </div>
+                            </a>
+                            <a href="{% url 'item:items' %}?query={{ query }}&category={{ item.category.id }}">
+                                <div class="absolute top-0 right-0 p-2 bg-orange-800 text-white m-1 rounded-full text-xs bg-opacity-70 hover:bg-opacity-100">{{ item.category }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="flex justify-center">
+                    <a href="items/" class="bg-orange-900 p-2 rounded-xl text-white hover:bg-orange-800 mt-5 px-5 bg-opacity-90">View More Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!-- projects -->
+        <div class="2xl:mx-96 sm:mx-0 md:mx-20 border-t-2 border-b-2 border-gray-100">
+            <div class="px-6 py-12">
+                <h2 class="mb-12 leading-normal text-gray-900 text-3xl font-serif text-center">Latest Projects</h2>
+                <div class="grid grid-cols-4 gap-3">
+                    {% for project in projects %}
+                        <div class="relative shadow-lg bg-gray-100 m-2 hover:scale-90">
+                            <a href="{% url 'project:detail' project.id %}">
+                                <div>
+                                    <img class="" src="{{ project.image.url }}">
+                                </div>
+                                <div class="p-2">
+                                    <h2 class="xl:text-xl lg:text-lg md:text-md sm:text-sm font-semibold">{{ project.name }}</h2>
+                                    {% if project.collab %}
+                                        <h3 class="text-gray-500 text-sm py-2">In collaboration with <strong>{{ project.collab }}</strong></h3>
+                                    {% endif %}
+                                    {% if project.location %}
+                                    <h3 class="text-gray-500 text-sm">Located in <strong>{{ project.location }}</strong> </h3>
+                                    {% endif %}
+                                </div>
+                            </a>
+                            <a href="{% url 'project:projects' %}?query={{ query }}&category={{ project.category.id }}">
+                                <div class="absolute top-0 right-0 p-2 bg-orange-800 text-white m-1 rounded-full text-xs bg-opacity-80 hover:bg-opacity-100">{{ project.category }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="flex justify-center">
+                    <a href="projects/" class="bg-orange-900 p-2 rounded-xl text-white hover:bg-orange-800 mt-5 px-5 bg-opacity-90">View More Projects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="my-5 leading-normal text-gray-900 text-3xl font-serif text-center">Types of Techniques Used</h2>
+    {% for type in firingtype %}
+        <div class="px-6 py-10  bg-{{type.color}}">
+            <div class="2xl:mx-96 sm:mx-0 md:mx-20">
+                <div class="flex items-center space-x-20 relative">
+                    <div class="w-1/3">
+                        <h2 class="text-5xl">{{ type.name }}</h2>
+                    </div>
+                    <div class="w-full leading-10 font-serif">
+                        <p>
+                            {{type.description|linebreaks}}
+                        </p>
+                    </div>
+                    <div class="flex w-1/5 top-0">
+                        <section class="">
+                            <img class="h-50 w-auto" src="{{type.image.url}}">
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="2xl:mx-96 sm:mx-0 md:mx-20 border-t-2 border-gray-100">
+        <!-- workshop, store, e-eshop -->
+        <div class="grid grid-cols-2 gap-2 font-serif">
+            <div class="col-span-1 p-10 space-y-5">
+                <h2 class="leading-normal text-gray-900 text-3xl font-serif text-center font-bold">Workshop</em></h2>
+                <div class=" font-sans space-y-3">
+                    <p class="italic text-gray-800 text-center">Arch. Evgeniou 17, Heraklion, Crete<br><strong>Greece</strong></p>
+                    <p class="italic text-gray-800 text-center"><strong>Mob.</strong>+30 6938 535 125</p>
+                    <p class="italic text-gray-800 text-center"><strong>Email </strong>info@spiritofgreece.gr</p>
+                </div>
+                <img src="/media/workshop.jpg" alt="" class="rounded-xl">
+            </div>
+            <div class="col-span-1 p-10 space-y-5">
+                <h2 class="leading-normal text-gray-900 text-3xl font-serif text-center font-bold">Store</em></h2>
+                <div class=" font-sans space-y-3">
+                    <p class="italic text-gray-800 text-center">Papa Alexandrou 4, Heraklion, Crete<br><strong>Greece</strong></p>
+                    <p class="italic text-gray-800 text-center"><strong>Tel.</strong>+30 2810 286 287</p>
+                    <p class="italic text-gray-800 text-center"><strong>Email </strong>info@spiritofgreece.eu</p>
+                </div>
+                <img src="/media/store.jpg" alt="" class="rounded-xl">
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+    
+
+

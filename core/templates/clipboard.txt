@@ -1,0 +1,68 @@
+<!-- listing categories in x -->
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Categories</h2>
+    <div class="grid grid-cols-4 gap-3 ">
+        {% for category in categories %}
+        <div>
+            <a href="">
+                <div class="p-6 bg-white rounded-b-xl">
+                    <h2 class="xl:text-2xl lg:text-xl md:text-base sm:text-sm">{{ category.name }}</h2>
+                    <p class="text-gray-500">Pieces: {{ category.items.count }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+<!-- inside script to change images -->
+let image = document.getElementById('image');
+                let images = ['/media/acrylic1.jpg', '/media/acrylic2.jpg','/media/acrylic3.jpg','/media/acrylic4.jpg']
+                setInterval(function(){
+                    let random = Math.floor(Math.random() * 4);
+                    image.src = images[random];
+                }, 800);
+
+
+
+
+
+<div class="flex items-center space-x-20 relative">
+                <div class="w-1/3">
+                    <h2 class="text-5xl">Acrylic Decoration</h2>
+                </div>
+                <div class="w-1/3 leading-10 font-serif">
+                    <ul>
+                        <li>Painted before firing</li>
+                        <li>Painted before firing</li>
+                        <li>Painted before firing</li>
+                        <li>Painted before firing</li>
+                    </ul>
+                </div>
+                <div class="flex w-1/5 top-0">
+                    <section class="">
+                        <img class="slides slides-hidden" src="/media/acrylic1.png">
+                        <img class="slides slides-hidden" src="/media/acrylic2.png">
+                        <img class="slides slides-hidden" src="/media/acrylic3.png">
+                        <img class="slides slides-hidden" src="/media/acrylic4.png">
+                    </section>
+                </div>
+
+JAVA CHANGE IMAGE EACH SEC
+    <script>
+        addEventListener("load",() => {
+            var index = 0;
+            const slides = document.querySelectorAll(".slides");
+            const classHide = "slides-hidden", count = slides.length;
+            nextSlide();
+            function nextSlide() {
+                slides[(index ++) % count].classList.add(classHide);
+                slides[index % count].classList.remove(classHide);
+                setTimeout(nextSlide, 2000);
+            }
+        });
+    </script>

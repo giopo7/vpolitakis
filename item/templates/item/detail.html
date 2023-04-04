@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+<div class="2xl:mx-52 md:mx-10 sm:mx-0 my-10">
+    <div class="border-b-2 ">
+        <div class="grid grid-cols-5 gap-6 mb-10">
+            <div class="col-span-3 border-2 border-orange-900 flex justify-center">
+                <img src="{{ item.image.url }}" class="rounded-xl">
+            </div> 
+
+            <div class="col-span-2 bg-gray-100 rounded-xl p-10">
+                <h1 class="text-xl font-semibold">{{ item.name }}</h1>
+                <div class="my-10">
+                    <p>{{ item.description|linebreaks }}</p>
+                </div>
+                <h3 class="">Price: <strong>{{ item.price }}€</strong></h3>
+                <a class="mt-10 inline-block text-xl text-white bg-orange-800 hover:bg-orange-700 p-3 rounded-xl" href="">Contact</a>
+            
+            </div>
+        </div>
+        
+
+        <div>
+            {% if item.image1 %}
+                <img src="{{ item.image1.url }}" alt="item_image_1" onclick="change(this.src)">
+            {% endif %}
+            {% if item.image2 %}
+                <img src="{{ item.image2.url }}" alt="item_image_1" onclick="change(this.src)">
+            {% endif %}
+            {% if item.image3 %}
+                <img src="{{ item.image3.url }}" alt="item_image_1" onclick="change(this.src)">
+            {% endif %}
+        </div>
+    </div>
+
+
+    <h2 class="text-center text-2xl my-10">Similar Products</h2>
+    <div class="grid grid-cols-4 gap-6 border-gray-50">
+        {% for s in similar %}
+                        <div class="relative shadow-lg bg-gray-100 m-2 hover:scale-90">
+                            <a href="{% url 'item:detail' s.id %}">
+                                <div>
+                                    <img class="" src="{{ s.image.url }}">
+                                </div>
+                                <div class="p-2 bg-gray-100">
+                                    <h2 class="xl:text-xl lg:text-lg md:text-md sm:text-sm font-semibold">{{ s.name }}</h2>
+                                    <p class="text-gray-500 text-sm py-2">Created on {{ s.created_at }}</p>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="absolute top-0 right-0 p-2 bg-orange-800 text-white m-1 rounded-full text-xs bg-opacity-70 hover:bg-opacity-100">{{ s.category }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

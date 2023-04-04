@@ -1,0 +1,88 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Products{% endblock title %}
+
+{% block content %}
+    <div class="grid grid-cols-4 gap-4">
+        <div class="col-span-1 pl-5"> 
+            <form method="get" action="{% url 'item:items' %}">
+                <input name="query" class="w-full my-3 py-4 px-6 border roundend-xl" type="text" value="{{ query }}" placeholder="Search in Products">
+
+                <button class="py-4 px-8 text-lg bg-orange-800 text-white rounded-xl" >Search</button>
+            
+
+                <hr class="my-6">
+
+                <p class="font-semibold text-lg">Categories</p>
+
+                <ul>
+                    {% for category in categories %}
+                        <li class="py-2 px-2 rounded-xl {% if category.id == category_id %} bg-orange-800 bg-opacity-50{% endif %}">
+                            <a href="{% url 'item:items' %}?query={{ query }}{% if shape %} &shape={{ shape }}{% endif %}&category={{ category.id }}" class="text-lg">{{ category.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <hr class="my-6">
+
+                <p class="font-semibold text-lg">What shape are you looking for?</p>
+
+                <ul>
+                    {% for shape, text in shape_choices %}
+                    <li class="py-2 px-2 rounded-xl {% if shape == shape_id %} bg-red {% endif %}">
+                        <a href="{% url 'item:items' %}?query={{ query }}&shape={{ shape }}">{{text}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <hr class="my-6">
+
+                <p class="font-semibold text-lg">Price</p>
+
+                    Minimum: <input name="min_price" class="my-2 py-2 px-2 border round
+                    end-xl" type="text" value="{{ min_price }}" placeholder="Min Price"> €
+                    Maximum: <input name="max_price" class="my-2 py-2 px-2 border roundend-xl" type="text" value="{{ max_price }}" placeholder="Max Price"> €
+
+                    <button class="py-2 mt-2 px-8 text-lg bg-orange-800 text-white rounded-xl">Apply</button>
+            </form>
+
+
+            <p class="font-semibold mt-6">Clear Filters</p>
+
+            <ul>
+                <li>
+                    <a href="{% url 'item:items' %}" class="mt-2 py-2 px-8 inline-block bg-gray-400 text-white rounded-xl">Clear</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-span-3 bg-gray-100 ">
+            <div class="py-10">
+                <div class="2xl:mx-30 xl:mx-20 md:mx-10 sm:mx-0">
+                    <div class="rounded-xl">
+                        <div class="grid grid-cols-4 gap-5 ">
+                            {% for item in items %}
+                                <div class="relative shadow-lg bg-white">
+                                    <a href="{% url 'item:detail' item.id %}">
+                                        <div>
+                                            <img class="" src="{{ item.image.url }}">
+                                        </div>
+                                        <div class="p-6 bg-white">
+                                            <h2 class="xl:text-xl lg:text-lg md:text-md sm:text-sm">{{ item.name }}</h2>
+                                            <p class="text-sm text-gray-500 pt-2">Price <strong>{{ item.price }}€</strong></p>
+                                        </div>
+                                    </a>
+                                    <a href="#">
+                                        <div class="absolute top-0 right-0 p-2 bg-orange-800 text-white m-1 rounded-full text-xs bg-opacity-70">{{ item.category }}</div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

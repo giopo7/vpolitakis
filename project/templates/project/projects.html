@@ -1,0 +1,69 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Products{% endblock title %}
+
+{% block content %}
+    <div class="grid grid-cols-4 gap-4">
+        <div class="col-span-1 pl-5"> 
+            <form method="get" action="{% url 'project:projects' %}">
+                <input name="query" class="w-full my-3 py-4 px-6 border roundend-xl" type="text" value="{{ query }}" placeholder="Search in Projects">
+
+                <button class="py-4 px-8 text-lg bg-orange-800 text-white rounded-xl" >Search</button>
+            </form>
+
+            <hr class="my-6">
+
+            <p class="font-semibold text-lg">Categories</p>
+
+            <ul>
+                {% for category in categories %}
+                    <li class="py-2 px-2 rounded-xl {% if category.id == category_id %} bg-orange-800 bg-opacity-50{% endif %}">
+                        <a href="{% url 'project:projects' %}?query={{ query }}&category={{ category.id }}" class="text-lg">{{ category.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <hr class="my-6">
+
+            <p class="font-semibold">Clear Filters</p>
+
+            <ul>
+                <li>
+                    <a href="{% url 'project:projects' %}" class="mt-2 py-2 px-8 inline-block bg-gray-400 text-white rounded-xl">Clear</a>
+                </li>
+            </ul>
+        </div> 
+
+        <div class="col-span-3 bg-gray-100 ">
+            <div class="py-10">
+                <div class="2xl:mx-30 xl:mx-20 md:mx-10 sm:mx-0">
+                    <div class="rounded-xl">
+                        <div class="grid grid-cols-4 gap-5 ">
+                            {% for project in projects %}
+                                <div class="relative shadow-lg bg-white m-2">
+                                    <a href="{% url 'project:detail' project.id %}">
+                                        <div>
+                                            <img class="" src="{{ project.image.url }}">
+                                        </div>
+                                        <div class="p-2">
+                                            <h2 class="xl:text-xl lg:text-lg md:text-md sm:text-sm font-semibold">{{ project.name }}</h2>
+                                            {% if project.collab %}
+                                                <h3 class="text-gray-500 text-sm py-2">In collaboration with <strong>{{ project.collab }}</strong></h3>
+                                            {% endif %}
+                                            {% if project.location %}
+                                            <h3 class="text-gray-500 text-sm">Located in <strong>{{ project.location }}</strong> </h3>
+                                            {% endif %}
+                                        </div>
+                                    </a>
+                                    <a href="#">
+                                        <div class="absolute top-0 right-0 p-2 bg-orange-800 text-white m-1 rounded-full text-xs bg-opacity-80">{{ project.category }}</div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

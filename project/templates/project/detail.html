@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{project.name}}{% endblock title %}
+
+{% block content %}
+    <div class="my-10 mx-10">
+        <div class="grid grid-cols-4 flex items-center text-center">
+            <div class="col-span-2">
+                <img src="{{project.image.url}}" alt="">
+            </div>
+            <div class="col-span-2 space-y-5">
+                <h1 class="text-3xl">{{project.name}}</h1>
+                {% if project.collab %}
+                <h2 class="text-gray-500">In collaboration with <strong>{{project.collab}}</strong></h2>
+                {% endif %}
+                {% if project.location %}
+                <h2 class="text-gray-500">Located in <strong>{{project.location}}</strong></h2>
+                {% endif %}
+                <h2 class="text-gray-500">{{project.date}}</h2>
+            </div>
+        </div>
+
+        <div class="bg-gray-200 rounded-xl p-10 mt-5">
+            <p class="text-lg">{{project.description|linebreaksbr}}</p>
+
+        </div>
+    </div>
+
+    <h2 class="text-center text-2xl my-10">Similar Projects</h2>
+    <div class="grid grid-cols-4 gap-6 border-gray-50">
+        {% for s in similar %}
+                        <div class="relative shadow-lg bg-gray-100 m-2 hover:scale-90">
+                            <a href="{% url 'project:detail' s.id %}">
+                                <div>
+                                    <img class="" src="{{ s.image.url }}">
+                                </div>
+                                <div class="p-2 bg-gray-100">
+                                    <h2 class="xl:text-xl lg:text-lg md:text-md sm:text-sm font-semibold">{{ s.name }}</h2>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="absolute top-0 right-0 p-2 bg-orange-800 text-white m-1 rounded-full text-xs bg-opacity-70 hover:bg-opacity-100">{{ s.category }}</div>
+                            </a>
+                        </div>
+                    {% endfor %}
+
+    </div>
+
+{% endblock content %}
